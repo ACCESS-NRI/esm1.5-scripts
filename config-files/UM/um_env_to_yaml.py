@@ -28,7 +28,7 @@ import errno
 import yaml
 
 
-def set_default_output_path(input_path):
+def default_output_path(input_path):
     """
     Produce a default output path based on the path to the 
     input um_env.py file.
@@ -63,10 +63,11 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
     python_input_path = args.input_filepath
+
     if args.ofile is not None:
         yaml_output_path = args.ofile
     else:
-        yaml_output_path = set_default_output_path(python_input_path)
+        yaml_output_path = default_output_path(python_input_path)
 
     # Source the input um_env python file to get environment variable dictionary.
     # Based on example at
@@ -88,5 +89,5 @@ if __name__ == "__main__":
     # Export the dictionary to a yaml file
     with open(yaml_output_path, 'w') as file:
         file.write(
-            yaml.dump(um_vars, default_flow_style=False)
+            yaml.dump(um_vars, default_flow_style=False, sort_keys=False)
         )
